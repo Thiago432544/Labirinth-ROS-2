@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="roda_boba_macro" params="prefix parent x_offset y_offset z_offset">
+        <link name="${prefix}_roda_boba_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <sphere radius="${raio_roda_boba}"/>
+                </geometry>
+                <material name="cinza_claro"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <sphere radius="${raio_roda_boba}"/>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>0.0</mu>
+                            <mu2>0.0</mu2>
+                            <slip1>1.0</slip1>
+                            <slip2>1.0</slip2>
+                        </ode>
+                    </friction>
+                    <contact>
+                        <ode>
+                            <soft_cfm>0</soft_cfm>
+                            <soft_erp>0.2</soft_erp>
+                            <kp>1e+13</kp>
+                            <kd>1</kd>
+                            <max_vel>0.01</max_vel>
+                            <min_depth>0.001</min_depth>
+                        </ode>
+                    </contact>
+                </surface>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="${massa_roda_boba}"/>
+                <inertia ixx="${(2/5) * massa_roda_boba * (raio_roda_boba*raio_roda_boba)}" ixy="0.0" ixz="0.0" iyy="${(2/5) * massa_roda_boba * (raio_roda_boba*raio_roda_boba)}" iyz="0.0" izz="${(2/5) * massa_roda_boba * (raio_roda_boba*raio_roda_boba)}"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}_roda_boba_junta" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${prefix}_roda_boba_link"/>
+            <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 0"/>
+        </joint>
+
+        <gazebo reference="${prefix}_roda_boba_link">
+            <material>Gazebo/DarkGrey</material>
+            <mu1>0.0</mu1>
+            <mu2>0.0</mu2>
+            <kp>1000000.0</kp>
+            <kd>10.0</kd>
+            <selfCollide>false</selfCollide>
+        </gazebo>
+    </xacro:macro>
+</robot>

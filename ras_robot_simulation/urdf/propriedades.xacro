@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:property name="fator_escala" value="0.8" />
+
+  <xacro:property name="fator_escala_cubico" value="${fator_escala * fator_escala * fator_escala}" />
+
+
+  <xacro:property name="altura_total_robo" value="${0.5 * fator_escala}" />
+  <xacro:property name="largura_total_robo" value="${0.9 * fator_escala}" />
+  <xacro:property name="comprimento_total_robo" value="${1.0 * fator_escala}" />
+  <xacro:property name="comprimento_chassis" value="${1.0 * fator_escala}" />
+  <xacro:property name="largura_chassis" value="${largura_total_robo - 2 * espessura_roda}" />
+  <xacro:property name="altura_chassis" value="${0.5 * fator_escala}" />
+  <xacro:property name="massa_chassis" value="${15.0 * fator_escala_cubico}" />
+  <xacro:property name="folga_chao" value="${0.1 * fator_escala}" />
+
+  <xacro:property name="origem_base_link_z_do_chao" value="${folga_chao + altura_chassis/2}" />
+
+  <xacro:property name="raio_roda" value="${0.25 * fator_escala}" />
+  <xacro:property name="espessura_roda" value="${0.05 * fator_escala}" />
+  <xacro:property name="massa_roda" value="${1.0 * fator_escala_cubico}" />
+
+  <xacro:property name="pos_x_junta_roda" value="0.0" />
+  <xacro:property name="pos_y_junta_roda" value="${largura_chassis/2 + espessura_roda/2}" />
+  <xacro:property name="pos_z_junta_roda" value="${raio_roda - origem_base_link_z_do_chao}" />
+
+  <xacro:property name="raio_roda_boba" value="${0.1 * fator_escala}" />
+  <xacro:property name="massa_roda_boba" value="${0.5 * fator_escala_cubico}" />
+  <xacro:property name="pos_x_roda_boba" value="${comprimento_chassis/2 - raio_roda_boba - (0.02 * fator_escala)}" />
+  <xacro:property name="pos_z_roda_boba" value="${raio_roda_boba - origem_base_link_z_do_chao}" />
+
+  <xacro:property name="tamanho_lidar" value="${0.05 * fator_escala}" />
+  <xacro:property name="massa_lidar" value="${0.1 * fator_escala_cubico}" />
+
+  <xacro:property name="pos_z_lidar" value="${altura_chassis/2 - tamanho_lidar}" />
+  <xacro:property name="pos_xy_borda_lidar_frente_tras" value="${comprimento_chassis/2 - tamanho_lidar/4}" />
+  <xacro:property name="pos_xy_borda_lidar_lados" value="${largura_chassis/2 - tamanho_lidar/4}" />
+
+</robot>

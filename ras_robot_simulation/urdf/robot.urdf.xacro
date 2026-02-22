@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot name="robot_diff"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="propriedades.xacro"/>
+    <xacro:include filename="materiais.xacro"/>
+    <xacro:include filename="chassis.xacro"/>
+    <xacro:include filename="roda.xacro"/>
+    <xacro:include filename="roda_boba.xacro"/>
+    <xacro:include filename="lidar.xacro"/>
+    <xacro:include filename="camera.xacro"/>
+    <xacro:include filename="gazebo_elementos.xacro"/>
+
+    <xacro:chassis_macro/>
+
+    <xacro:roda_macro prefix="left" parent="base_link" y_espelho="1"/>
+    <xacro:roda_macro prefix="right" parent="base_link" y_espelho="-1"/>
+
+    <xacro:roda_boba_macro prefix="front" parent="base_link" x_offset="${pos_x_roda_boba}" y_offset="0" z_offset="${pos_z_roda_boba}"/>
+    <xacro:roda_boba_macro prefix="rear" parent="base_link" x_offset="${-pos_x_roda_boba}" y_offset="0" z_offset="${pos_z_roda_boba}"/>
+
+    <xacro:lidar_macro prefix="front" parent="base_link" xyz_origem="${pos_xy_borda_lidar_frente_tras} 0 ${pos_z_lidar}" rpy_origem="0 0 0"/>
+    <xacro:lidar_macro prefix="rear" parent="base_link" xyz_origem="-${pos_xy_borda_lidar_frente_tras} 0 ${pos_z_lidar}" rpy_origem="0 0 ${PI}"/>
+    <xacro:lidar_macro prefix="left" parent="base_link" xyz_origem="0.25 ${pos_xy_borda_lidar_lados} ${pos_z_lidar}" rpy_origem="0 0 ${PI/2}"/>
+    <xacro:lidar_macro prefix="right" parent="base_link" xyz_origem="0.25 -${pos_xy_borda_lidar_lados} ${pos_z_lidar}" rpy_origem="0 0 -${PI/2}"/>
+
+    <xacro:camera_mono_macro prefix="frente" parent="base_link" xyz_origem="${pos_xy_borda_lidar_frente_tras} 0 ${pos_z_lidar - 0.2}" rpy_origem="0 0 0" />
+
+    <xacro:gazebo_ros2_control_config/>
+
+</robot>

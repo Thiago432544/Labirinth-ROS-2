@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="roda_macro" params="prefix parent y_espelho">
+        <link name="${prefix}_roda_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <cylinder radius="${raio_roda}" length="${espessura_roda}"/>
+                </geometry>
+                <material name="preto"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <cylinder radius="${raio_roda}" length="${espessura_roda}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <mass value="${massa_roda}"/>
+                <inertia ixx="${(1/12) * massa_roda * (3*raio_roda*raio_roda + espessura_roda*espessura_roda)}" ixy="0.0" ixz="0.0" iyy="${(1/12) * massa_roda * (3*raio_roda*raio_roda + espessura_roda*espessura_roda)}" iyz="0.0" izz="${(1/2) * massa_roda * (raio_roda*raio_roda)}"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}_wheel_joint" type="continuous">
+            <parent link="${parent}"/>
+            <child link="${prefix}_roda_link"/>
+            <origin xyz="${pos_x_junta_roda} ${y_espelho * pos_y_junta_roda} ${pos_z_junta_roda}" rpy="0 0 0"/>
+            <axis xyz="0 1 0"/>
+            <limit effort="100" velocity="100"/>
+        </joint>
+
+        <gazebo reference="${prefix}_roda_link">
+            <material>Gazebo/DarkGrey</material>
+            <mu1>0.8</mu1>
+            <mu2>0.8</mu2>
+            <kp>1000000.0</kp>
+            <kd>100.0</kd>
+            <minDepth>0.001</minDepth>
+            <maxVel>0.1</maxVel>
+            <fdir1>1 0 0</fdir1>
+        </gazebo>
+
+        <transmission name="${prefix}_roda_transmissao">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_wheel_joint">
+            </joint>
+            <actuator name="${prefix}_roda_motor">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+    </xacro:macro>
+</robot>

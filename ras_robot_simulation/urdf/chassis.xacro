@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="chassis_macro">
+        <link name="base_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${comprimento_chassis} ${largura_chassis} ${altura_chassis}"/>
+                </geometry>
+                <material name="azul"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${comprimento_chassis} ${largura_chassis} ${altura_chassis}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="${massa_chassis}"/>
+                <inertia ixx="${(1/12) * massa_chassis * (largura_chassis*largura_chassis + altura_chassis*altura_chassis)}" ixy="0.0" ixz="0.0" iyy="${(1/12) * massa_chassis * (comprimento_chassis*comprimento_chassis + altura_chassis*altura_chassis)}" iyz="0.0" izz="${(1/12) * massa_chassis * (comprimento_chassis*comprimento_chassis + largura_chassis*largura_chassis)}"/>
+            </inertial>
+        </link>
+
+        <gazebo reference="base_link">
+            <material>Gazebo/SkyeBlue</material>
+            <pose>0 0 ${origem_base_link_z_do_chao} 0 0 0</pose>
+        </gazebo>
+
+        <link name="base_footprint">
+            <inertial>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+            </inertial>
+        </link>
+
+        <joint name="base_footprint_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="base_footprint"/>
+            <origin xyz="0 0 -${origem_base_link_z_do_chao}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+</robot>
