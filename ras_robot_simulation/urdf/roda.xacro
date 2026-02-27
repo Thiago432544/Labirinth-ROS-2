@@ -28,6 +28,7 @@
             <origin xyz="${pos_x_junta_roda} ${y_espelho * pos_y_junta_roda} ${pos_z_junta_roda}" rpy="0 0 0"/>
             <axis xyz="0 1 0"/>
             <limit effort="100" velocity="100"/>
+            <dynamics damping="2.0" friction="0.1"/>
         </joint>
 
         <gazebo reference="${prefix}_roda_link">
